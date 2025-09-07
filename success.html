@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎉 Payment Successful! Access Your 25 English Ebooks</title>
+    <meta name="description" content="Payment successful! Access your 25 premium English learning ebooks instantly via Google Drive. Dussehra Special - Lifetime access guaranteed!">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #000428 0%, #004e92 100%);
+            color: #ffffff;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* Success Header */
+        .success-header {
+            text-align: center;
+            padding: 2rem 0;
+            border-bottom: 1px solid rgba(255, 107, 53, 0.3);
+        }
+        
+        .success-icon {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #00cc44, #00aa33);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-size: 3rem;
+            animation: successPop 0.6s ease-out;
+        }
+        
+        @keyframes successPop {
+            0% { transform: scale(0); opacity: 0; }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        
+        .success-title {
+            font-size: 2.8rem;
+            font-weight: bold;
+            color: #00cc44;
+            margin-bottom: 0.5rem;
+        }
+        
+        .success-subtitle {
+            font-size: 1.3rem;
+            color: #cccccc;
+            margin-bottom: 1rem;
+        }
+        
+        .dussehra-badge {
+            background: linear-gradient(135deg, #ff6b35, #ffaa44);
+            padding: 0.5rem 1.5rem;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            display: inline-block;
+            animation: badgeGlow 2s infinite;
+        }
+        
+        @keyframes badgeGlow {
+            0%, 100% { box-shadow: 0 0 20px rgba(255, 107, 53, 0.5); }
+            50% { box-shadow: 0 0 30px rgba(255, 107, 53, 0.8); }
+        }
+        
+        /* Google Drive Access */
+        .drive-section {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 107, 53, 0.3);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: center;
+        }
+        
+        .drive-icon {
+            font-size: 3rem;
+            color: #4285f4;
+            margin-bottom: 1rem;
+        }
+        
+        .drive-section h2 {
+            color: #ffffff;
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+        }
+        
+        .drive-access-btn {
+            background: linear-gradient(135deg, #4285f4, #34a853);
+            color: white;
+            padding: 1.5rem 3rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            margin: 1rem 0;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(66, 133, 244, 0.3);
+            animation: driveButtonPulse 2s infinite;
+        }
+        
+        .drive-access-btn:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 15px 35px rgba(66, 133, 244, 0.5);
+        }
+        
+        @keyframes driveButtonPulse {
+            0%, 100% { box-shadow: 0 8px 25px rgba(66, 133, 244, 0.3); }
+            50% { box-shadow: 0 8px 35px rgba(66, 133, 244, 0.5); }
+        }
+        
+        .drive-instructions {
+            background: rgba(66, 133, 244, 0.1);
+            border-left: 4px solid #4285f4;
+            padding: 1rem;
+            margin: 1.5rem 0;
+            border-radius: 8px;
+            text-align: left;
+        }
+        
+        .drive-instructions h4 {
+            color: #4285f4;
+            margin-bottom: 0.5rem;
+        }
+        
+        .drive-instructions ol {
+            color: #cccccc;
+            padding-left: 1.5rem;
+        }
+        
+        .drive-instructions li {
+            margin-bottom: 0.3rem;
+        }
+        
+        /* Purchase Summary */
+        .purchase-summary {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 107, 53, 0.3);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .purchase-summary h2 {
+            color: #ff6b35;
+            margin-bottom: 1rem;
+            text-align: center;
+            font-size: 1.6rem;
+        }
+        
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.8rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .summary-item:last-child {
+            border-bottom: none;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+        
+        .summary-label {
+            color: #cccccc;
+        }
+        
+        .summary-value {
+            color: #ffffff;
+            font-weight: 600;
+        }
+        
+        .discount-highlight {
+            color: #ff6b35;
+        }
+        
+        /* Features Grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        
+        .feature-item {
+            background: rgba(255, 107, 53, 0.1);
+            border: 1px solid #ff6b35;
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+            color: #cccccc;
+        }
+        
+        /* Contact Section */
+        .contact-section {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 107, 53, 0.3);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: center;
+        }
+        
+        .contact-section h2 {
+            color: #ff6b35;
+            margin-bottom: 1rem;
+        }
+        
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+        
+        .contact-item {
+            color: #cccccc;
+        }
+        
+        .contact-item a {
+            color: #ff6b35;
+            text-decoration: none;
+        }
+        
+        .contact-item a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .success-title {
+                font-size: 2.2rem;
+            }
+            
+            .success-icon {
+                width: 70px;
+                height: 70px;
+                font-size: 2.2rem;
+            }
+            
+            .drive-access-btn {
+                padding: 1.2rem 2rem;
+                font-size: 1.1rem;
+            }
+            
+            .contact-info {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Success Header -->
+    <header class="success-header">
+        <div class="container">
+            <div class="dussehra-badge">🎉 Dussehra Special Success!</div>
+            <div class="success-icon">✓</div>
+            <h1 class="success-title">Payment Successful!</h1>
+            <p class="success-subtitle">
+                🎉 बधाई हो! आपका Dussehra Special payment successful हो गया है।<br>
+                अब आप अपने 25 premium English ebooks access कर सकते हैं!
+            </p>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <div class="container">
+            
+            <!-- Google Drive Access -->
+            <div class="drive-section">
+                <div class="drive-icon">🗂️</div>
+                <h2>Access Your 25 Ebooks Instantly!</h2>
+                <p>आपके सभी 25 premium English learning ebooks Google Drive folder में ready हैं।<br>
+                नीचे दिए गए button पर click करके instant access करें!</p>
+                
+                <a href="https://drive.google.com/drive/folders/1CFcrxux128VtiXXjAc8h2EfdL1v0wkTq?usp=drive_link" 
+                   target="_blank" 
+                   class="drive-access-btn"
+                   onclick="trackDriveAccess()">
+                    📁 Open Google Drive - 25 Ebooks
+                </a>
+                
+                <div class="drive-instructions">
+                    <h4>📋 Access Steps:</h4>
+                    <ol>
+                        <li>Click the "Open Google Drive" button above</li>
+                        <li>Sign in to your Google account (if required)</li>
+                        <li>View all 25 ebooks in the folder</li>
+                        <li>Download or save to your Google Drive</li>
+                        <li>Enjoy lifetime access to all materials!</li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- Purchase Summary -->
+            <div class="purchase-summary">
+                <h2>📋 Dussehra Special Purchase Summary</h2>
+                <div class="summary-item">
+                    <span class="summary-label">Product:</span>
+                    <span class="summary-value">25 Premium English Learning Ebooks</span>
+                </div>
+                <div class="summary-item">
+                    <span class="summary-label">Original Price:</span>
+                    <span class="summary-value">₹999</span>
+                </div>
+                <div class="summary-item">
+                    <span class="summary-label">Dussehra Discount:</span>
+                    <span class="summary-value discount-highlight">70% OFF (₹700 saved!)</span>
+                </div>
+                <div class="summary-item">
+                    <span class="summary-label">Amount Paid:</span>
+                    <span class="summary-value discount-highlight">₹299</span>
+                </div>
+                <div class="summary-item">
+                    <span class="summary-label">Payment ID:</span>
+                    <span class="summary-value" id="payment-id">Loading...</span>
+                </div>
+                <div class="summary-item">
+                    <span class="summary-label">Transaction Date:</span>
+                    <span class="summary-value" id="purchase-date"></span>
+                </div>
+            </div>
+
+            <!-- What You Get -->
+            <div class="features-section">
+                <h2>✅ आपको मिलेगा:</h2>
+                <div class="features-grid">
+                    <div class="feature-item">✅ 25 Premium Ebooks</div>
+                    <div class="feature-item">✅ Lifetime Access</div>
+                    <div class="feature-item">✅ Hindi + English</div>
+                    <div class="feature-item">✅ Instant Download</div>
+                    <div class="feature-item">✅ Mobile Compatible</div>
+                    <div class="feature-item">✅ Money Back Guarantee</div>
+                </div>
+            </div>
+
+            <!-- Contact Support -->
+            <div class="contact-section">
+                <h2>📞 Need Help?</h2>
+                <p>अगर आपको कोई problem आए या help चाहिए तो हमसे contact करें:</p>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        📱 Phone: <a href="tel:7905350614">7905350614</a>
+                    </div>
+                    <div class="contact-item">
+                        📧 Email: <a href="mailto:spokenenglishschoolofficial@gmail.com">spokenenglishschoolofficial@gmail.com</a>
+                    </div>
+                    <div class="contact-item">
+                        📸 Instagram: <a href="https://www.instagram.com/rozpadhteraho" target="_blank">@rozpadhteraho</a>
+                    </div>
+                </div>
+                <p style="margin-top: 1rem; color: #cccccc;">Support Hours: 9 AM - 9 PM (Mon-Sun)</p>
+            </div>
+            
+        </div>
+    </main>
+
+    <script>
+        // Initialize success page
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🎉 Success Page Loaded - 25 Ebooks Access');
+            
+            // Get payment ID from URL params
+            const urlParams = new URLSearchParams(window.location.search);
+            const paymentId = urlParams.get('payment_id') || 'N/A';
+            
+            // Update payment details
+            document.getElementById('payment-id').textContent = paymentId;
+            updatePurchaseDate();
+            
+            // Show success animation
+            setTimeout(() => {
+                showSuccessNotification();
+            }, 1000);
+        });
+        
+        // Update purchase date
+        function updatePurchaseDate() {
+            const now = new Date();
+            const dateString = now.toLocaleDateString('en-IN') + ' ' + now.toLocaleTimeString('en-IN', {
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+            document.getElementById('purchase-date').textContent = dateString;
+        }
+        
+        // Track Google Drive access
+        function trackDriveAccess() {
+            console.log('📁 Google Drive accessed for 25 ebooks');
+            // You can add analytics tracking here
+        }
+        
+        // Show success notification
+        function showSuccessNotification() {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: linear-gradient(135deg, #00cc44, #00aa33);
+                color: white;
+                padding: 1rem 1.5rem;
+                border-radius: 10px;
+                font-weight: bold;
+                z-index: 10000;
+                animation: slideInRight 0.5s ease;
+                box-shadow: 0 8px 25px rgba(0, 204, 68, 0.4);
+            `;
+            notification.innerHTML = '🎉 Welcome to English Pro Family! Happy Learning!';
+            
+            document.body.appendChild(notification);
+            
+            // Remove notification after 5 seconds
+            setTimeout(() => {
+                notification.style.animation = 'slideOutRight 0.5s ease';
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.parentNode.removeChild(notification);
+                    }
+                }, 500);
+            }, 5000);
+        }
+        
+        // Add CSS animations
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideInRight {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+            @keyframes slideOutRight {
+                from { transform: translateX(0); opacity: 1; }
+                to { transform: translateX(100%); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
