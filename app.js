@@ -1,16 +1,20 @@
-// Rozpadhteraho Professional Landing Page JavaScript
+// Rozpadhteraho Professional Landing Page JavaScript - Fixed Version
 
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize all functionality
     initializeNavigation();
     initializeCountdownTimer();
-    initializeFifteenMinuteTimer();
+    initializeUrgentTimer();
     initializeImageSlider();
     initializeFAQ();
     initializeScrollAnimations();
     initializeMobileCTA();
     initializeWhatsAppButton();
-    initializePaymentButtons();
+    
+    // Initialize payment buttons last to avoid conflicts
+    setTimeout(() => {
+        initializePaymentButtons();
+    }, 1000);
     
     // Track page load
     console.log('Rozpadhteraho Landing Page Loaded Successfully');
@@ -30,14 +34,14 @@ function initializeNavigation() {
     });
 }
 
-// Header Countdown Timer (24 hours)
+// 24-hour Countdown Timer - Header
 function initializeCountdownTimer() {
     const hoursElement = document.getElementById('hours');
     const minutesElement = document.getElementById('minutes');
     const secondsElement = document.getElementById('seconds');
     
     if (!hoursElement || !minutesElement || !secondsElement) {
-        console.log('Header countdown elements not found');
+        console.log('24-hour countdown elements not found');
         return;
     }
     
@@ -65,22 +69,23 @@ function initializeCountdownTimer() {
     // Update immediately and then every second
     updateCountdown();
     setInterval(updateCountdown, 1000);
+    console.log('24-hour countdown timer initialized');
 }
 
-// 15 Minute Timer (Specific requirement)
-function initializeFifteenMinuteTimer() {
-    const minutesElement = document.getElementById('timerMinutes');
-    const secondsElement = document.getElementById('timerSeconds');
+// 15-minute Urgent Timer
+function initializeUrgentTimer() {
+    const minutesElement = document.getElementById('urgent-minutes');
+    const secondsElement = document.getElementById('urgent-seconds');
     
     if (!minutesElement || !secondsElement) {
-        console.log('15-minute timer elements not found');
+        console.log('Urgent timer elements not found');
         return;
     }
     
     // Set timer to 15 minutes (900 seconds)
     let timeLeft = 15 * 60; // 15 minutes in seconds
     
-    function updateFifteenMinuteTimer() {
+    function updateUrgentTimer() {
         if (timeLeft > 0) {
             const minutes = Math.floor(timeLeft / 60);
             const seconds = timeLeft % 60;
@@ -90,21 +95,21 @@ function initializeFifteenMinuteTimer() {
             
             timeLeft--;
         } else {
-            // Reset timer when it reaches zero
+            // Reset to 15 minutes when reaches zero
             timeLeft = 15 * 60;
         }
     }
     
     // Update immediately and then every second
-    updateFifteenMinuteTimer();
-    setInterval(updateFifteenMinuteTimer, 1000);
+    updateUrgentTimer();
+    setInterval(updateUrgentTimer, 1000);
+    console.log('15-minute urgent timer initialized');
 }
 
-// Image Slider functionality
+// Image Slider functionality - FIXED
 function initializeImageSlider() {
-    const sliderTrack = document.getElementById('sliderTrack');
+    const sliderTrack = document.getElementById('slider-track');
     const dots = document.querySelectorAll('.dot');
-    const slides = document.querySelectorAll('.slide');
     
     if (!sliderTrack || dots.length === 0) {
         console.log('Slider elements not found');
@@ -112,170 +117,192 @@ function initializeImageSlider() {
     }
     
     let currentSlide = 0;
-    const totalSlides = slides.length;
-    
-    // Auto slide every 4 seconds
+    const totalSlides = dots.length;
     let autoSlideInterval;
     
-    function goToSlide(index) {
-        // Update slide position
-        const translateX = -index * 100;
+    // Update slider position
+    function updateSlider(slideIndex) {
+        const translateX = -slideIndex * 100;
         sliderTrack.style.transform = `translateX(${translateX}%)`;
         
-        // Update active states
-        slides.forEach((slide, i) => {
-            slide.classList.toggle('active', i === index);
-        });
+        // Update dots
+        dots.forEach(dot => dot.classList.remove('active'));
+        if (dots[slideIndex]) {
+            dots[slideIndex].classList.add('active');
+        }
         
-        dots.forEach((dot, i) => {
-            dot.classList.toggle('active', i === index);
-        });
-        
-        currentSlide = index;
+        currentSlide = slideIndex;
     }
     
+    // Next slide
     function nextSlide() {
-        const next = (currentSlide + 1) % totalSlides;
-        goToSlide(next);
+        const nextIndex = (currentSlide + 1) % totalSlides;
+        updateSlider(nextIndex);
     }
     
+    // Previous slide
+    function prevSlide() {
+        const prevIndex = (currentSlide - 1 + totalSlides) % totalSlides;
+        updateSlider(prevIndex);
+    }
+    
+    // Auto slide functionality
     function startAutoSlide() {
-        autoSlideInterval = setInterval(nextSlide, 4000); // 4 seconds
+        autoSlideInterval = setInterval(nextSlide, 4000); // Change slide every 4 seconds
     }
     
     function stopAutoSlide() {
-        if (autoSlideInterval) {
-            clearInterval(autoSlideInterval);
-        }
+        clearInterval(autoSlideInterval);
     }
     
-    // Dot navigation
+    // FIXED: Dot navigation - prevent event bubbling and payment trigger
     dots.forEach((dot, index) => {
-        dot.addEventListener('click', () => {
-            goToSlide(index);
+        dot.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            e.stopImmediatePropagation();
+            
+            updateSlider(index);
             stopAutoSlide();
             startAutoSlide(); // Restart auto slide
         });
+        
+        // Ensure dots don't have payment-triggering attributes
+        dot.removeAttribute('onclick');
     });
     
     // Touch/swipe support for mobile
     let startX = 0;
-    let isDragging = false;
+    let endX = 0;
     
     sliderTrack.addEventListener('touchstart', (e) => {
         startX = e.touches[0].clientX;
-        isDragging = true;
         stopAutoSlide();
     });
     
     sliderTrack.addEventListener('touchmove', (e) => {
-        if (!isDragging) return;
-        e.preventDefault();
+        endX = e.touches[0].clientX;
     });
     
-    sliderTrack.addEventListener('touchend', (e) => {
-        if (!isDragging) return;
+    sliderTrack.addEventListener('touchend', () => {
+        const threshold = 50;
+        const diff = startX - endX;
         
-        const endX = e.changedTouches[0].clientX;
-        const diffX = startX - endX;
-        
-        // Minimum swipe distance
-        if (Math.abs(diffX) > 50) {
-            if (diffX > 0) {
-                // Swipe left - next slide
+        if (Math.abs(diff) > threshold) {
+            if (diff > 0) {
                 nextSlide();
             } else {
-                // Swipe right - previous slide
-                const prev = currentSlide === 0 ? totalSlides - 1 : currentSlide - 1;
-                goToSlide(prev);
+                prevSlide();
             }
         }
         
-        isDragging = false;
         startAutoSlide();
     });
     
-    // Start auto slide
-    startAutoSlide();
-    
-    // Pause on hover
+    // Pause auto slide on hover
     const sliderContainer = document.querySelector('.slider-container');
     if (sliderContainer) {
         sliderContainer.addEventListener('mouseenter', stopAutoSlide);
         sliderContainer.addEventListener('mouseleave', startAutoSlide);
+        
+        // Prevent slider container from triggering payment
+        sliderContainer.addEventListener('click', function(e) {
+            if (e.target.classList.contains('dot')) {
+                e.stopPropagation();
+            }
+        });
     }
+    
+    // Start auto sliding
+    startAutoSlide();
+    
+    console.log('Image slider initialized with auto-slide and fixed navigation');
 }
 
-// FAQ Accordion - FIXED VERSION
+// FAQ Accordion functionality
 function initializeFAQ() {
-    const faqItems = document.querySelectorAll('.faq-item');
+    const faqQuestions = document.querySelectorAll('.faq-question');
     
-    faqItems.forEach(item => {
-        const question = item.querySelector('.faq-question');
-        const answer = item.querySelector('.faq-answer');
-        
-        if (!question || !answer) return;
-        
-        // Set initial state
-        answer.style.maxHeight = '0px';
-        answer.style.overflow = 'hidden';
-        answer.style.transition = 'max-height 0.3s ease';
-        
+    faqQuestions.forEach(question => {
         question.addEventListener('click', function(e) {
             e.preventDefault();
             e.stopPropagation();
             
-            const isActive = item.classList.contains('active');
+            const faqItem = this.closest('.faq-item');
+            const isActive = faqItem.classList.contains('active');
             
-            // Close all FAQ items first
-            faqItems.forEach(otherItem => {
-                const otherAnswer = otherItem.querySelector('.faq-answer');
-                otherItem.classList.remove('active');
-                if (otherAnswer) {
-                    otherAnswer.style.maxHeight = '0px';
-                }
+            // Close all FAQ items
+            document.querySelectorAll('.faq-item').forEach(item => {
+                item.classList.remove('active');
             });
             
-            // If this item wasn't active, open it
+            // Toggle current item
             if (!isActive) {
-                item.classList.add('active');
-                // Calculate the actual height needed
-                answer.style.maxHeight = 'none';
-                const height = answer.scrollHeight;
-                answer.style.maxHeight = '0px';
-                
-                // Force reflow then animate to actual height
-                setTimeout(() => {
-                    answer.style.maxHeight = height + 'px';
-                }, 10);
+                faqItem.classList.add('active');
             }
         });
     });
     
-    console.log('FAQ accordion initialized for', faqItems.length, 'items');
+    console.log('FAQ accordion initialized');
 }
 
-// Initialize Payment Buttons
+// Initialize Payment Buttons - IMPROVED
 function initializePaymentButtons() {
-    // Get all payment buttons
+    // Remove all existing onclick handlers first
+    const allElements = document.querySelectorAll('*[onclick]');
+    allElements.forEach(el => {
+        if (el.getAttribute('onclick')?.includes('handlePayment')) {
+            el.removeAttribute('onclick');
+        }
+    });
+    
+    // Get specific payment buttons
+    const paymentButtons = [
+        document.querySelector('.hero__button'),
+        document.querySelector('#main-cta'),
+        document.querySelector('.timer-cta'),
+        ...document.querySelectorAll('button[onclick*="handlePayment"]'),
+        ...document.querySelectorAll('.mobile-cta button')
+    ].filter(Boolean);
+    
+    // Also search for buttons with Order text, but exclude slider dots
     const allButtons = document.querySelectorAll('button, .btn');
     
     allButtons.forEach(button => {
+        // Skip if it's a slider dot, FAQ question, or modal close button
+        if (button.classList.contains('dot') || 
+            button.classList.contains('faq-question') ||
+            button.classList.contains('payment-modal__close')) {
+            return;
+        }
+        
         const buttonText = button.textContent || button.innerText;
-        if (buttonText.includes('Order') || buttonText.includes('₹299') || buttonText.includes('अभी')) {
+        if (buttonText.includes('Order') || 
+            buttonText.includes('₹299') || 
+            buttonText.includes('अभी') ||
+            buttonText.includes('तुरंत') ||
+            button.classList.contains('hero__button') ||
+            button.classList.contains('timer-cta')) {
+            
             // Remove any existing onclick handlers
             button.removeAttribute('onclick');
             
+            // Remove existing event listeners
+            const newButton = button.cloneNode(true);
+            button.parentNode.replaceChild(newButton, button);
+            
             // Add new event listener
-            button.addEventListener('click', function(e) {
+            newButton.addEventListener('click', function(e) {
                 e.preventDefault();
                 e.stopPropagation();
                 handlePayment();
             });
             
-            console.log('Payment button initialized:', buttonText.trim());
+            console.log('Payment button initialized:', buttonText.trim().substring(0, 30));
         }
     });
+    
+    console.log('Payment buttons initialized');
 }
 
 // Scroll Animations
@@ -295,12 +322,14 @@ function initializeScrollAnimations() {
 
     // Observe elements for animation
     const animateElements = document.querySelectorAll(
-        '.ebook-preview, .testimonial-card, .faq-item, .hero__stats-card, .comparison-card'
+        '.ebook-card, .testimonial-card, .faq-item, .hero__stats-card, .comparison-column, .ebook-preview'
     );
     
     animateElements.forEach(element => {
         observer.observe(element);
     });
+    
+    console.log('Scroll animations initialized');
 }
 
 // Mobile Sticky CTA
@@ -326,20 +355,13 @@ function initializeMobileCTA() {
         }
     });
     
-    // Initialize mobile CTA button
-    const mobileCTAButton = mobileCTA.querySelector('button');
-    if (mobileCTAButton) {
-        mobileCTAButton.addEventListener('click', function(e) {
-            e.preventDefault();
-            handlePayment();
-        });
-    }
+    console.log('Mobile CTA initialized');
 }
 
 // WhatsApp Float Button
 function initializeWhatsAppButton() {
     const whatsappNumber = '7905350614';
-    const whatsappMessage = encodeURIComponent('हैलो! मुझे Rozpadhteraho के 10 Premium English Ebooks के बारे में जानकारी चाहिए। दशहरा Special Offer available है क्या?');
+    const whatsappMessage = encodeURIComponent('हैलो! मुझे Rozpadhteraho के 25 Premium English Ebooks के बारे में जानकारी चाहिए। दशहरा Special Offer available है क्या?');
     
     // Remove existing WhatsApp button if any
     const existingButton = document.querySelector('.whatsapp-float');
@@ -414,7 +436,7 @@ function showContactModal() {
         <div class="payment-modal__content">
             <div class="payment-modal__header">
                 <h3>🛒 Order करने के लिए संपर्क करें</h3>
-                <button class="payment-modal__close" onclick="closeModal()">&times;</button>
+                <button class="payment-modal__close">&times;</button>
             </div>
             <div class="payment-modal__body">
                 <div class="contact-content">
@@ -425,13 +447,13 @@ function showContactModal() {
                             <span class="new-price">₹299</span>
                             <span class="discount">70% OFF</span>
                         </div>
-                        <p>10 Premium English Learning Ebooks</p>
+                        <p>25 Premium English Learning Ebooks</p>
                     </div>
                     
                     <div class="contact-methods">
                         <h3>📞 तुरंत Order करने के लिए:</h3>
                         
-                        <a href="https://wa.me/7905350614?text=${encodeURIComponent('हैलो! मुझे 10 Premium English Ebooks चाहिए। दशहरा Special में ₹299 वाला offer। Payment कैसे करूं?')}" target="_blank" class="contact-btn whatsapp-btn">
+                        <a href="https://wa.me/7905350614?text=${encodeURIComponent('हैलो! मुझे 25 Premium English Ebooks चाहिए। दशहरा Special में ₹299 वाला offer। Payment कैसे करूं?')}" target="_blank" class="contact-btn whatsapp-btn">
                             📱 WhatsApp पर Order करें
                             <small>सबसे Fast Response</small>
                         </a>
@@ -445,17 +467,6 @@ function showContactModal() {
                             ✉️ Email करें
                             <small>24 hours में reply</small>
                         </a>
-                    </div>
-                    
-                    <div class="payment-options">
-                        <h4>💳 Payment Methods Available:</h4>
-                        <div class="payment-methods">
-                            <span class="payment-method">📱 Google Pay</span>
-                            <span class="payment-method">📱 PhonePe</span>
-                            <span class="payment-method">📱 Paytm</span>
-                            <span class="payment-method">🏦 UPI</span>
-                            <span class="payment-method">💳 Bank Transfer</span>
-                        </div>
                     </div>
                     
                     <div class="guarantee">
@@ -472,12 +483,29 @@ function showContactModal() {
     document.body.appendChild(modal);
     document.body.style.overflow = 'hidden';
     
+    // FIXED: Add proper modal close functionality
+    const closeBtn = modal.querySelector('.payment-modal__close');
+    closeBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        closeModal();
+    });
+    
     // Auto close modal background click
     modal.addEventListener('click', function(e) {
         if (e.target === modal) {
             closeModal();
         }
     });
+    
+    // ESC key to close
+    const escHandler = function(e) {
+        if (e.key === 'Escape') {
+            closeModal();
+            document.removeEventListener('keydown', escHandler);
+        }
+    };
+    document.addEventListener('keydown', escHandler);
 }
 
 // Razorpay Payment Integration
@@ -485,11 +513,11 @@ function initiateRazorpayPayment() {
     console.log('Initializing Razorpay payment');
     
     const options = {
-        key: 'rzp_test_RCIo0QJHlZ1ld8', // Test key
+        key: 'rzp_test_RCIo0QJHlZ1ld8', // Test key as specified
         amount: 29900, // Amount in paisa (₹299)
         currency: 'INR',
         name: 'Rozpadhteraho',
-        description: '10 Premium English Learning Ebooks - दशहरा Special',
+        description: '25 Premium English Learning Ebooks - दशहरा Special',
         image: 'https://i.imgur.com/3g7nmJC.png',
         handler: function(response) {
             console.log('Payment Success:', response);
@@ -510,7 +538,8 @@ function initiateRazorpayPayment() {
         modal: {
             ondismiss: function() {
                 console.log('Payment cancelled by user');
-                handlePaymentFailure('Payment cancelled by user');
+                // Don't show failure popup for user cancellation
+                console.log('User cancelled payment - returning to page');
             }
         }
     };
@@ -557,7 +586,7 @@ function handlePaymentFailure(errorMessage) {
     });
 }
 
-// Success Popup
+// Success Popup - FIXED with proper close functionality
 function showSuccessPopup(data) {
     removeExistingModals();
     
@@ -567,14 +596,14 @@ function showSuccessPopup(data) {
         <div class="payment-modal__content">
             <div class="payment-modal__header success-header">
                 <h3>🎉 Payment Successful! बधाई हो!</h3>
-                <button class="payment-modal__close" onclick="closeModal()">&times;</button>
+                <button class="payment-modal__close">&times;</button>
             </div>
             <div class="payment-modal__body">
                 <div class="success-content">
                     <div class="success-icon">✅</div>
                     <h2>Order Confirmed!</h2>
                     <p class="success-message">
-                        आपका payment successful हो गया है। अब आप 10 Premium English Ebooks access कर सकते हैं।
+                        आपका payment successful हो गया है। अब आप 25 Premium English Ebooks access कर सकते हैं।
                     </p>
                     
                     <div class="payment-details">
@@ -587,7 +616,7 @@ function showSuccessPopup(data) {
                         <h3>📥 अभी Download करें</h3>
                         <p>नीचे दिए गए link से अभी अपने ebooks access करें:</p>
                         
-                        <a href="${data.driveLink}" target="_blank" class="btn btn--primary btn--lg download-btn">
+                        <a href="${data.driveLink}" target="_blank" class="download-btn">
                             📚 Google Drive से Download करें
                         </a>
                         
@@ -599,13 +628,13 @@ function showSuccessPopup(data) {
                     <div class="support-section">
                         <h4>Need Help? हमसे संपर्क करें:</h4>
                         <div class="support-contacts">
-                            <a href="tel:7905350614" class="btn btn--secondary">
+                            <a href="tel:7905350614" class="support-btn">
                                 📞 Call: 7905350614
                             </a>
-                            <a href="mailto:padhteraho2021@gmail.com" class="btn btn--secondary">
+                            <a href="mailto:padhteraho2021@gmail.com" class="support-btn">
                                 ✉️ Email Support
                             </a>
-                            <a href="https://wa.me/7905350614?text=${encodeURIComponent('हैलो! मैंने अभी 10 English Ebooks का payment किया है। Download link चाहिए। Payment ID: ' + data.paymentId)}" target="_blank" class="btn btn--secondary">
+                            <a href="https://wa.me/7905350614?text=${encodeURIComponent('हैलो! मैंने अभी 25 English Ebooks का payment किया है। Download link चाहिए। Payment ID: ' + data.paymentId)}" target="_blank" class="support-btn">
                                 💬 WhatsApp Support
                             </a>
                         </div>
@@ -624,15 +653,32 @@ function showSuccessPopup(data) {
     document.body.appendChild(modal);
     document.body.style.overflow = 'hidden';
     
+    // FIXED: Add proper modal close functionality
+    const closeBtn = modal.querySelector('.payment-modal__close');
+    closeBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        closeModal();
+    });
+    
     // Auto close modal background click
     modal.addEventListener('click', function(e) {
         if (e.target === modal) {
             closeModal();
         }
     });
+    
+    // ESC key to close
+    const escHandler = function(e) {
+        if (e.key === 'Escape') {
+            closeModal();
+            document.removeEventListener('keydown', escHandler);
+        }
+    };
+    document.addEventListener('keydown', escHandler);
 }
 
-// Failure Popup
+// Failure Popup - FIXED with proper close functionality
 function showFailurePopup(errorMessage) {
     removeExistingModals();
     
@@ -642,7 +688,7 @@ function showFailurePopup(errorMessage) {
         <div class="payment-modal__content">
             <div class="payment-modal__header failure-header">
                 <h3>❌ Payment नहीं हुआ</h3>
-                <button class="payment-modal__close" onclick="closeModal()">&times;</button>
+                <button class="payment-modal__close">&times;</button>
             </div>
             <div class="payment-modal__body">
                 <div class="failure-content">
@@ -660,7 +706,7 @@ function showFailurePopup(errorMessage) {
                         <h3>🔄 क्या करें?</h3>
                         <p>नीचे दिए गए options में से कोई भी choose करें:</p>
                         
-                        <button class="btn btn--primary btn--lg" onclick="closeModal(); setTimeout(handlePayment, 500);">
+                        <button class="retry-btn" onclick="closeModal(); setTimeout(handlePayment, 500);">
                             🔄 Payment Retry करें
                         </button>
                     </div>
@@ -668,33 +714,21 @@ function showFailurePopup(errorMessage) {
                     <div class="contact-section">
                         <h4>या हमसे Direct Contact करें:</h4>
                         <div class="contact-options">
-                            <a href="https://wa.me/7905350614?text=${encodeURIComponent('हैलो! मेरा payment fail हो गया है। 10 English Ebooks का order करना चाहता हूं। Manual payment करना चाहूंगा।')}" target="_blank" class="btn btn--whatsapp">
+                            <a href="https://wa.me/7905350614?text=${encodeURIComponent('हैलो! मेरा payment fail हो गया है। 25 English Ebooks का order करना चाहता हूं। Manual payment करना चाहूंगा।')}" target="_blank" class="contact-option-btn whatsapp">
                                 📱 WhatsApp पर Order करें
                             </a>
-                            <a href="tel:7905350614" class="btn btn--secondary">
+                            <a href="tel:7905350614" class="contact-option-btn call">
                                 📞 Call करें: 7905350614
                             </a>
-                            <a href="mailto:padhteraho2021@gmail.com" class="btn btn--secondary">
+                            <a href="mailto:padhteraho2021@gmail.com" class="contact-option-btn email">
                                 ✉️ Email करें
                             </a>
                         </div>
                         
-                        <div class="manual-payment">
-                            <h4>💳 Manual Payment Options:</h4>
-                            <ul>
-                                <li>📱 Google Pay / PhonePe / Paytm</li>
-                                <li>🏦 Bank Transfer</li>
-                                <li>💳 UPI Payment</li>
-                            </ul>
-                            <p class="payment-guarantee">
-                                <strong>✅ 100% Safe:</strong> Payment के तुरंत बाद ebooks मिल जाएंगे
-                            </p>
+                        <div class="support-hours">
+                            <p>📞 <strong>Support Available:</strong> 9 AM - 9 PM (Mon-Sun)</p>
+                            <p>⚡ <strong>Quick Response:</strong> WhatsApp पर instant reply मिलेगा</p>
                         </div>
-                    </div>
-                    
-                    <div class="support-hours">
-                        <p>📞 <strong>Support Available:</strong> 9 AM - 9 PM (Mon-Sun)</p>
-                        <p>⚡ <strong>Quick Response:</strong> WhatsApp पर instant reply मिलेगा</p>
                     </div>
                 </div>
             </div>
@@ -705,15 +739,32 @@ function showFailurePopup(errorMessage) {
     document.body.appendChild(modal);
     document.body.style.overflow = 'hidden';
     
+    // FIXED: Add proper modal close functionality
+    const closeBtn = modal.querySelector('.payment-modal__close');
+    closeBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        closeModal();
+    });
+    
     // Auto close modal background click
     modal.addEventListener('click', function(e) {
         if (e.target === modal) {
             closeModal();
         }
     });
+    
+    // ESC key to close
+    const escHandler = function(e) {
+        if (e.key === 'Escape') {
+            closeModal();
+            document.removeEventListener('keydown', escHandler);
+        }
+    };
+    document.addEventListener('keydown', escHandler);
 }
 
-// Modal Helper Functions
+// Modal Helper Functions - FIXED
 function removeExistingModals() {
     const existingModals = document.querySelectorAll('.payment-modal');
     existingModals.forEach(modal => modal.remove());
@@ -724,13 +775,15 @@ function closeModal() {
     modals.forEach(modal => {
         modal.style.animation = 'fadeOut 0.3s ease forwards';
         setTimeout(() => {
-            modal.remove();
+            if (modal.parentNode) {
+                modal.remove();
+            }
             document.body.style.overflow = 'auto';
         }, 300);
     });
 }
 
-// Add Modal Styles
+// Add Modal Styles - Enhanced
 function addModalStyles() {
     if (document.querySelector('#modal-styles')) return;
     
@@ -829,6 +882,7 @@ function addModalStyles() {
         
         .contact-content, .success-content, .failure-content {
             text-align: center;
+            color: white;
         }
         
         .offer-summary {
@@ -868,78 +922,137 @@ function addModalStyles() {
             font-weight: bold;
         }
         
-        .contact-methods {
-            margin-bottom: 24px;
-        }
-        
-        .contact-methods h3 {
-            color: #ff6b35;
-            margin-bottom: 20px;
+        .contact-btn, .download-btn, .support-btn, .retry-btn, .contact-option-btn {
+            display: inline-block;
+            padding: 12px 20px;
+            margin: 8px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
         }
         
         .contact-btn {
-            display: block;
-            width: 100%;
-            padding: 16px;
-            margin-bottom: 12px;
-            border-radius: 12px;
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 16px;
-            transition: all 0.3s ease;
+            width: calc(100% - 16px);
+            margin: 8px 0;
         }
         
-        .contact-btn small {
-            display: block;
-            font-size: 12px;
-            font-weight: normal;
-            margin-top: 4px;
-            opacity: 0.8;
-        }
-        
-        .whatsapp-btn {
+        .whatsapp-btn, .whatsapp {
             background: #25d366;
             color: white;
         }
         
-        .whatsapp-btn:hover {
+        .whatsapp-btn:hover, .whatsapp:hover {
             background: #20c05a;
-            transform: translateY(-2px);
         }
         
-        .call-btn {
+        .call-btn, .call {
             background: #ff6b35;
             color: white;
         }
         
-        .call-btn:hover {
+        .call-btn:hover, .call:hover {
             background: #e55a2b;
-            transform: translateY(-2px);
         }
         
-        .email-btn {
+        .email-btn, .email {
             background: rgba(255, 107, 53, 0.2);
             color: #ff6b35;
             border: 1px solid rgba(255, 107, 53, 0.3);
         }
         
-        .email-btn:hover {
+        .email-btn:hover, .email:hover {
             background: rgba(255, 107, 53, 0.3);
         }
         
-        .btn--whatsapp {
-            background: #25d366;
+        .download-btn {
+            background: linear-gradient(135deg, #28a745, #20c851);
             color: white;
+            font-size: 16px;
+            margin: 16px 0;
         }
         
-        .btn--whatsapp:hover {
-            background: #20c05a;
-            transform: translateY(-1px);
+        .download-btn:hover {
+            background: linear-gradient(135deg, #20c851, #1e7e34);
+            transform: translateY(-2px);
+        }
+        
+        .retry-btn {
+            background: linear-gradient(135deg, #ff6b35, #ff8c5a);
+            color: white;
+            font-size: 16px;
+            margin: 16px 0;
+        }
+        
+        .retry-btn:hover {
+            background: linear-gradient(135deg, #e55a2b, #ff6b35);
+            transform: translateY(-2px);
+        }
+        
+        .support-btn {
+            background: rgba(255, 107, 53, 0.2);
+            color: #ff6b35;
+            border: 1px solid rgba(255, 107, 53, 0.3);
+            margin: 4px;
+        }
+        
+        .support-btn:hover {
+            background: rgba(255, 107, 53, 0.3);
+        }
+        
+        .success-icon, .failure-icon {
+            font-size: 64px;
+            margin-bottom: 16px;
+        }
+        
+        .success-content h2 {
+            color: #28a745;
+            margin-bottom: 16px;
+            font-size: 28px;
+        }
+        
+        .failure-content h2 {
+            color: #dc3545;
+            margin-bottom: 16px;
+            font-size: 28px;
+        }
+        
+        .contact-methods h3, .retry-section h3, .contact-section h4 {
+            color: #ff6b35;
+            margin-bottom: 16px;
+        }
+        
+        .contact-options {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 16px 0;
+        }
+        
+        .support-contacts {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 16px 0;
         }
         
         @media screen and (max-width: 480px) {
             .payment-modal {
                 padding: 10px;
+            }
+            
+            .contact-options, .support-contacts {
+                flex-direction: column;
+            }
+            
+            .contact-option-btn, .support-btn {
+                width: 100%;
+                margin: 4px 0;
             }
         }
     `;
@@ -986,9 +1099,6 @@ window.addEventListener('load', function() {
             item.style.transform = 'translateY(0)';
         }, 500 + (index * 100));
     });
-    
-    // Re-initialize payment buttons after page load
-    setTimeout(initializePaymentButtons, 1000);
 });
 
 // Global error handler
