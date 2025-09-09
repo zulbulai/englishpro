@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Padhteraho18 - दशहरा Special 70% OFF | 25 Premium English Ebooks</title>
+    <meta name="description" content="दशहरा Special Offer - 70% OFF! ₹999 की जगह सिर्फ ₹299 में पाएं 25 Premium English Learning Ebooks. Lifetime Access, Instant Download.">
+    <meta name="keywords" content="English learning, spoken english, grammar, ebooks, hindi english, padhteraho18">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+</head>
+<body>
+    <!-- Fixed Header -->
+    <header class="header" id="header">
+        <nav class="nav container">
+            <div class="nav__brand">
+                <div class="nav__logo">
+                    <h2 class="nav__title">Padhteraho18</h2>
+                    <p class="nav__tagline">भारत का सबसे भरोसेमंद English Learning Platform</p>
+                </div>
+                <div class="nav__stats">
+                    <span class="nav__stat">50K+ Students</span>
+                    <span class="nav__stat">⭐ 4.9 Rating</span>
+                </div>
+            </div>
+            
+            <div class="nav__timer">
+                <div class="countdown-timer">
+                    <span class="timer-label">दशहरा Special Ends In:</span>
+                    <div class="timer-display" id="countdown">
+                        <span class="time-unit" id="hours">00</span>:
+                        <span class="time-unit" id="minutes">00</span>:
+                        <span class="time-unit" id="seconds">00</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="nav__contact">
+                <a href="tel:7905350614" class="nav__phone">📞 7905350614</a>
+                <div class="nav__toggle" id="nav-toggle">☰</div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Trust Bar -->
+    <div class="trust-bar">
+        <div class="container">
+            <div class="trust-items">
+                <div class="trust-item">
+                    <span class="trust-icon">💰</span>
+                    <span>100% Money Back</span>
+                </div>
+                <div class="trust-item">
+                    <span class="trust-icon">🔒</span>
+                    <span>Secure Payment</span>
+                </div>
+                <div class="trust-item">
+                    <span class="trust-icon">⚡</span>
+                    <span>Instant Download</span>
+                </div>
+                <div class="trust-item">
+                    <span class="trust-icon">∞</span>
+                    <span>Lifetime Access</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <main class="main">
+        <!-- Hero Section -->
+        <section class="hero" id="home">
+            <div class="container">
+                <div class="hero__container">
+                    <div class="hero__content">
+                        <div class="hero__badge floating">
+                            🎉 दशहरा Special Offer - Limited Time Only!
+                        </div>
+                        
+                        <h1 class="hero__title">
+                            25 Premium English Learning Ebooks<br>
+                            <span class="hero__title-highlight glow">70% OFF</span> में पाएं!
+                        </h1>
+                        
+                        <div class="hero__price-container">
+                            <div class="hero__price">
+                                <span class="hero__price-old">₹999</span>
+                                <span class="hero__price-new">₹299</span>
+                                <span class="hero__discount">70% छूट</span>
+                            </div>
+                            <p class="hero__savings">आप बचाएंगे: ₹700</p>
+                        </div>
+                        
+                        <div class="hero__features-grid">
+                            <div class="feature-item">✅ 25 Premium Ebooks Collection</div>
+                            <div class="feature-item">✅ Hindi + English Explanations</div>
+                            <div class="feature-item">✅ Lifetime Access - No Renewal</div>
+                            <div class="feature-item">✅ Grammar से Speaking तक All Topics</div>
+                            <div class="feature-item">✅ Instant Download via Google Drive</div>
+                            <div class="feature-item">✅ 50,000+ Students Trust Us</div>
+                        </div>
+                        
+                        <div class="hero__cta">
+                            <button class="btn btn--primary btn--lg hero__button" onclick="handlePayment()" id="main-cta">
+                                🛒 अभी Order करें - केवल ₹299
+                            </button>
+                            <p class="hero__guarantee">💎 100% Safe Payment | Instant Delivery</p>
+                        </div>
+                    </div>
+                    
+                    <div class="hero__media">
+                        <div class="video-container">
+                            <iframe 
+                                src="https://www.youtube.com/embed/GZaaij4hlzk" 
+                                title="Padhteraho18 English Learning" 
+                                frameborder="0" 
+                                allowfullscreen>
+                            </iframe>
+                        </div>
+                        
+                        <div class="hero__stats-card floating">
+                            <h3>🎯 Success Stats</h3>
+                            <div class="stats-grid">
+                                <div class="stat">
+                                    <span class="stat-number">50,000+</span>
+                                    <span class="stat-label">Students</span>
+                                </div>
+                                <div class="stat">
+                                    <span class="stat-number">4.9⭐</span>
+                                    <span class="stat-label">Rating</span>
+                                </div>
+                                <div class="stat">
+                                    <span class="stat-number">1000+</span>
+                                    <span class="stat-label">Reviews</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Social Proof Section -->
+        <section class="testimonials" id="testimonials">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">हमारे Students क्या कहते हैं</h2>
+                    <p class="section-subtitle">50,000+ Happy Students की Success Stories</p>
+                </div>
+
+                <div class="testimonials-grid">
+                    <div class="testimonial-card">
+                        <div class="testimonial-card__rating">
+                            ⭐⭐⭐⭐⭐
+                        </div>
+                        <p class="testimonial-card__review">
+                            "Padhteraho18 से मैंने सिर्फ 2 महीने में इतनी English सीख ली कि अब confidently interviews दे सकती हूं। 25 ebooks का collection amazing है!"
+                        </p>
+                        <div class="testimonial-card__author">
+                            <div class="testimonial-card__avatar">PS</div>
+                            <div class="testimonial-card__info">
+                                <h4 class="testimonial-card__name">Priya Sharma</h4>
+                                <p class="testimonial-card__location">Delhi</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="testimonial-card">
+                        <div class="testimonial-card__rating">
+                            ⭐⭐⭐⭐⭐
+                        </div>
+                        <p class="testimonial-card__review">
+                            "₹299 में जो content मिला है वह thousands worth का है। English conversations book से मेरी speaking skills बहुत improve हुई है।"
+                        </p>
+                        <div class="testimonial-card__author">
+                            <div class="testimonial-card__avatar">RK</div>
+                            <div class="testimonial-card__info">
+                                <h4 class="testimonial-card__name">Rajesh Kumar</h4>
+                                <p class="testimonial-card__location">Lucknow, UP</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="testimonial-card">
+                        <div class="testimonial-card__rating">
+                            ⭐⭐⭐⭐⭐
+                        </div>
+                        <p class="testimonial-card__review">
+                            "Housewife होकर लगता था English नहीं सीख सकूंगी। लेकिन ये ebooks इतने simple हैं कि easily सीख गई। Highly recommended!"
+                        </p>
+                        <div class="testimonial-card__author">
+                            <div class="testimonial-card__avatar">AV</div>
+                            <div class="testimonial-card__info">
+                                <h4 class="testimonial-card__name">Anjali Verma</h4>
+                                <p class="testimonial-card__location">Mumbai</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Ebooks Collection -->
+        <section class="ebooks" id="ebooks">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">25 Premium English Ebooks Collection</h2>
+                    <p class="section-subtitle">Complete English Learning Package - सब कुछ एक साथ!</p>
+                </div>
+
+                <div class="ebooks-grid">
+                    <div class="ebook-card"><span class="ebook-icon">💬</span><h3>3000 Daily Use Sentences</h3><p>रोज़ाना बोले जाने वाले 3000 English sentences</p><span class="ebook-category">Speaking</span></div>
+                    <div class="ebook-card"><span class="ebook-icon">📖</span><h3>3000 Daily Use Vocabulary</h3><p>Daily communication के लिए essential words</p><span class="ebook-category">Vocabulary</span></div>
+                    <div class="ebook-card"><span class="ebook-icon">📝</span><h3>English Grammar Complete</h3><p>Colorful examples के साथ complete grammar guide</p><span class="ebook-category">Grammar</span></div>
+                    <div class="ebook-card"><span class="ebook-icon">⏰</span><h3>Advanced Tense with Exercises</h3><p>सभी tenses की detailed explanation और practice</p><span class="ebook-category">Grammar</span></div>
+                    <div class="ebook-card"><span class="ebook-icon">🔄</span><h3>500+ Antonyms & Synonyms</h3><p>Vocabulary expansion के लिए essential collection</p><span class="ebook-category">Vocabulary</span></div>
+                    <div class="ebook-card"><span class="ebook-icon">🎯</span><h3>1000 Verb Forms</h3><p>Complete verb forms reference guide</p><span class="ebook-category">Grammar</span></div>
+                    <div class="ebook-card"><span class="ebook-icon">💭</span><h3>500 Idioms & Phrases</h3><p>Common English idioms और phrases collection</p><span class="ebook-category">Speaking</span></div>
+                    <div class="ebook-card"><span class="ebook-icon">🎓</span><h3>One-Word Substitution</h3><p>Competitive exams के लिए important section</p><span class="ebook-category">Competitive</span></div>
+                    <div class="ebook-card"><span class="ebook-icon">🏗️</span><h3>500 Structural Sentences</h3><p>Perfect sentence formation की practice</p><span class="ebook-category">Writing</span></div>
+                    <div class="ebook-card"><span class="ebook-icon">🗣️</span><h3>English Conversations</h3><p>Real-life situations के लिए conversation practice</p><span class="ebook-category">Speaking</span></div>
+                    <div class="ebook-card"><span class="ebook-icon">👔</span><h3>Interview Mastery</h3><p>Job interview success के लिए complete preparation</p><span class="ebook-category">Professional</span></div>
+                    <div class="ebook-card"><span class="ebook-icon">⚡</span><h3>Advanced Verbs</h3><p>Professional level verb usage और application</p><span class="ebook-category">Advanced</span></div>
+                    <div class="ebook-card"><span class="ebook-icon">🎨</span><h3>Other Ways to Say</h3><p>Alternative expressions और creative synonyms</p><span class="ebook-category">Speaking</span></div>
+                    <div class="ebook-card"><span class="ebook-icon">📅</span><h3>60 Days Spoken English</h3><p>2 महीने में fluent English speaking course</p><span class="ebook-category">Speaking</span></div>
+                    <div class="ebook-card"><span class="ebook-icon">☀️</span><h3>Daily English Conversations</h3><p>Everyday situations के लिए ready conversations</p><span class="ebook-category">Speaking</span></div>
+                    <div class="ebook-card"><span class="ebook-icon">❌</span><h3>Common English Mistakes</h3><p>Avoid करने वाली common errors की list</p><span class="ebook-category">Grammar</span></div>
+                    <div class="ebook-card"><span class="ebook-icon">🔗</span><h3>1000+ Phrasal Verbs</h3><p>Most used phrasal verbs का complete collection</p><span class="ebook-category">Vocabulary</span></div>
+                    <div class="ebook-card"><span class="ebook-icon">🌟</span><h3>Spoken English for Beginners</h3><p>Beginners के लिए step-by-step speaking guide</p><span class="ebook-category">Beginner</span></div>
+                    <div class="ebook-card"><span class="ebook-icon">🎙️</span><h3>Pronunciation Mastery</h3><p>Perfect pronunciation techniques और tips</p><span class="ebook-category">Speaking</span></div>
+                    <div class="ebook-card"><span class="ebook-icon">✍️</span><h3>English Writing Skills</h3><p>Professional writing improvement techniques</p><span class="ebook-category">Writing</span></div>
+                    <div class="ebook-card"><span class="ebook-icon">🎤</span><h3>Public Speaking in English</h3><p>Confidence के साथ public speaking mastery</p><span class="ebook-category">Speaking</span></div>
+                    <div class="ebook-card"><span class="ebook-icon">💼</span><h3>Business English Communication</h3><p>Professional workplace English skills</p><span class="ebook-category">Professional</span></div>
+                    <div class="ebook-card"><span class="ebook-icon">✈️</span><h3>English for Travel</h3><p>Travel situations के लिए essential English</p><span class="ebook-category">Travel</span></div>
+                    <div class="ebook-card"><span class="ebook-icon">📱</span><h3>Social Media English</h3><p>Modern digital communication skills</p><span class="ebook-category">Modern</span></div>
+                    <div class="ebook-card"><span class="ebook-icon">💪</span><h3>English Confidence Builder</h3><p>Build unshakeable confidence in English</p><span class="ebook-category">Confidence</span></div>
+                </div>
+
+                <div class="cta-section">
+                    <div class="cta-highlight">
+                        <h3>🎯 Total Value: ₹25,000+ (Individual ebook prices)</h3>
+                        <h2>आज सिर्फ ₹299 में सब कुछ पाएं!</h2>
+                        <button class="btn btn--primary btn--xl" onclick="handlePayment()">
+                            🛒 Complete Collection Order करें - ₹299 Only
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section class="faq" id="faq">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Frequently Asked Questions</h2>
+                    <p class="section-subtitle">आपके सभी सवालों के जवाब</p>
+                </div>
+
+                <div class="faq-container">
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            ये Ebooks मुझे कैसे मिलेंगी?
+                            <span class="faq-icon">+</span>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Payment successful होने के तुरंत बाद आपको Google Drive का link मिल जाएगा। साथ ही 5 minutes के अंदर email भी आ जाएगा। Spam folder भी check करें।</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            यह Ebooks किसके लिए suitable है?
+                            <span class="faq-icon">+</span>
+                        </button>
+                        <div class="faq-answer">
+                            <p>बिल्कुल हर level के लिए! Beginner से advanced तक। Students, professionals, housewives - सबके लिए perfect है। Age कोई barrier नहीं है।</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            Language कौन सी है?
+                            <span class="faq-icon">+</span>
+                        </button>
+                        <div class="faq-answer">
+                            <p>सभी ebooks में Hindi और English दोनों का perfect combination है। Hindi explanations के साथ English concepts समझाए गए हैं।</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            Lifetime access मिलेगा?
+                            <span class="faq-icon">+</span>
+                        </button>
+                        <div class="faq-answer">
+                            <p>हाँ! 100% lifetime access। एक बार payment के बाद कोई extra charges नहीं। Forever access मिलेगा। Google Drive में files हमेशा available रहेंगी।</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            मुझे English नहीं आती, क्या सीख सकूंगा?
+                            <span class="faq-icon">+</span>
+                        </button>
+                        <div class="faq-answer">
+                            <p>बिल्कुल! यह specially beginners के लिए बनाया गया है। Zero level से start करके fluent तक ले जाने वाला content है। Step-by-step सब कुछ clear किया गया है।</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            Payment safe है?
+                            <span class="faq-icon">+</span>
+                        </button>
+                        <div class="faq-answer">
+                            <p>100% safe! हम Razorpay का use करते हैं जो India का most trusted payment gateway है। आपका card details और payment information completely secure है।</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3 class="footer-title">Padhteraho18</h3>
+                    <p class="footer-tagline">भारत का सबसे भरोसेमंद English Learning Platform</p>
+                    <p class="footer-description">हमने 50,000+ students की English को transform किया है। Quality education को affordable बनाना हमारा mission है।</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Contact Info</h4>
+                    <div class="contact-items">
+                        <p>📞 7905350614</p>
+                        <p>✉️ spokenenglishschoolofficial@gmail.com</p>
+                        <p>📱 @rozpadhteraho</p>
+                        <p>🕒 9 AM - 9 PM (Mon-Sun)</p>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <div class="footer-links">
+                        <a href="#testimonials">Reviews</a>
+                        <a href="#ebooks">Ebooks Collection</a>
+                        <a href="#faq">FAQ</a>
+                        <a href="tel:7905350614">Contact</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 Padhteraho18. All rights reserved. | Made with ❤️ for English Learners</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Sticky Mobile CTA -->
+    <div class="mobile-cta" id="mobile-cta">
+        <button class="btn btn--primary btn--full-width" onclick="handlePayment()">
+            🛒 Order Now - ₹299 Only
+        </button>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
